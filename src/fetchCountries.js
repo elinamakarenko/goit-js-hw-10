@@ -5,9 +5,14 @@ export default class FetchCountries {
 
 fetchCountries() {
 const BASE_URL = "https://restcountries.com/v3.1/";
- fetch(`${BASE_URL}name/${this.name}`)
+ return fetch(`${BASE_URL}name/${this.name}?fields=name,capital,population,flags,languages`)
 .then(r=>r.json())
-.then(console.log);
+.then(resolve =>{
+    if(resolve.status===404){
+        throw new Error(resolve.status);
+    }
+    return resolve;
+})
 }
 
 get names (){
